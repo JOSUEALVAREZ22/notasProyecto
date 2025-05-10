@@ -46,7 +46,7 @@ namespace reactBacked.Repository
                 return false;
             }
         }
-                public bool update(int id, Alumno actualizar)
+        public bool update(int id, Alumno actualizar)
         {
             var alumnoUpdate = GetById(id);
 
@@ -58,32 +58,44 @@ namespace reactBacked.Repository
 
             alumnoUpdate.Direccion = actualizar.Direccion;
             alumnoUpdate.Dni = actualizar.Dni;
+            alumnoUpdate.Edad = actualizar.Edad;
             alumnoUpdate.Nombre = actualizar.Nombre;
             alumnoUpdate.Email = actualizar.Email;
 
             contexto.Alumnos.Update(alumnoUpdate);
             contexto.SaveChanges();
             return true;
-
-                var nuevoAlumno2 = new Alumno
+        }
+        #region Delete
+        public bool deleteAlumno(int id)
+        {
+            var borrar = GetById(id);
+            try
             {
-                Direccion = "Chalatenango, Barrio el centro",
-                Dni = "1345",
-                Edad = 30,
-                Email = "5@email",
-                Nombre = "Wiliams"
-            };
-
-            var resultado2 = alumnoDao.update(2, nuevoAlumno2);
-            Console.WriteLine(resultado2);
+                if (borrar == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    contexto.Alumnos.Remove(borrar);
+                    contexto.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.InnerException);
+                return false;
+            }
         }
+
     }
-            
-        }
-
-    
+    #endregion
+}
 
 
-     
+
+
 
 
